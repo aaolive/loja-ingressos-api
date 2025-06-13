@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Boolean
+from sqlalchemy import Column, Integer, String, Boolean, Date
 from .database import Base
 
 class Usuario(Base):
@@ -13,5 +13,9 @@ class Usuario(Base):
 class Evento(Base):
 
     __tablename__ = "eventos"
+
     id = Column(Integer, primary_key=True, index=True)
-    nome=Column()
+    nome=Column(String(100))
+    descricao = Column(String(100))
+    data_inicial = Column(Date)
+    data_final = Column(Date)
