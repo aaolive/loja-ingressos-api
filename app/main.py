@@ -52,3 +52,73 @@ def delete_usuario(usuario_id: int, db: Session = Depends(get_db)):
     if db_usuario is None:
         raise HTTPException(status_code=404, detail="Usuário não encontrado")
     return db_usuario
+
+
+# -- Endpoints para eventos --
+
+# @app.get("/eventos/", response_model=List[schemas.Evento])
+# def read_eventos(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+#     eventos = crud.get_eventos(db, skip=skip, limit=limit)
+#     return eventos
+
+# @app.get("/eventos/{evento_id}", response_model=schemas.Evento)
+# def read_evento(evento_id: int, db: Session = Depends(get_db)):
+#     db_evento = crud.get_evento(db, evento_id=evento_id)
+#     if db_evento is None:
+#         raise HTTPException(status_code=404, detail="Evento não encontrado")
+#     return db_evento
+
+# @app.post("/eventos/", response_model=schemas.Evento)
+# def create_evento(evento: schemas.Evento, db: Session = Depends(get_db)):
+#     db_evento = crud.create_evento(db, evento)
+#     return db_evento
+
+# @app.put("/eventos/{evento_id}", response_model=schemas.Evento)
+# def update_evento(evento_id: int, evento: schemas.Evento, db: Session = Depends(get_db)):
+#     db_evento = crud.update_evento(db, evento_id=evento_id, evento_update=evento)
+#     if db_evento is None:
+#         raise HTTPException(status_code=404, detail="Evento não encontrado")
+#     return db_evento
+
+# @app.delete("/eventos/{evento_id}", response_model=schemas.Evento)
+# def delete_evento(evento_id: int, db: Session = Depends(get_db)):
+#     db_evento = crud.delete_evento(db, evento_id=evento_id)
+#     if db_evento is None:
+#         raise HTTPException(status_code=404, detail="Evento não encontrado")
+#     return db_evento
+
+
+# --- INÍCIO DA MODIFICAÇÃO ---
+# --- Endpoints da API para Eventos ---
+
+@app.post("/eventos/", response_model=schemas.Evento)
+def create_evento(evento: schemas.EventoCreate, db: Session = Depends(get_db)):
+    return crud.create_evento(db=db, evento=evento)
+
+@app.get("/eventos/", response_model=List[schemas.Evento])
+def read_eventos(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    eventos = crud.get_eventos(db, skip=skip, limit=limit)
+    return eventos
+
+@app.get("/eventos/{evento_id}", response_model=schemas.Evento)
+def read_evento(evento_id: int, db: Session = Depends(get_db)):
+    db_evento = crud.get_evento(db, evento_id=evento_id)
+    if db_evento is None:
+        raise HTTPException(status_code=404, detail="Evento não encontrado")
+    return db_evento
+
+@app.put("/eventos/{evento_id}", response_model=schemas.Evento)
+def update_evento(evento_id: int, evento: schemas.EventoCreate, db: Session = Depends(get_db)):
+    db_evento = crud.update_evento(db, evento_id=evento_id, evento_update=evento)
+    if db_evento is None:
+        raise HTTPException(status_code=404, detail="Evento não encontrado")
+    return db_evento
+
+@app.delete("/eventos/{evento_id}", response_model=schemas.Evento)
+def delete_evento(evento_id: int, db: Session = Depends(get_db)):
+    db_evento = crud.delete_evento(db, evento_id=evento_id)
+    if db_evento is None:
+        raise HTTPException(status_code=404, detail="Evento não encontrado")
+    return db_evento
+
+# --- FIM DA MODIFICAÇÃO ---

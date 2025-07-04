@@ -1,5 +1,7 @@
-from sqlalchemy import Column, Integer, String, Boolean, Date
+# Importe o tipo de dado DateTime e Date
+from sqlalchemy import Column, Integer, String, Boolean, DateTime, Date 
 from .database import Base
+import datetime # Importe a biblioteca datetime
 
 class Usuario(Base):
     __tablename__ = "usuarios"
@@ -10,12 +12,16 @@ class Usuario(Base):
     senha_hash = Column(String(255))
     ativo = Column(Boolean, default=True)
 
-class Evento(Base):
 
+
+# Adicione o novo modelo para a tabela de eventos
+class Evento(Base):
     __tablename__ = "eventos"
 
     id = Column(Integer, primary_key=True, index=True)
-    nome=Column(String(100))
-    descricao = Column(String(100))
-    data_inicial = Column(Date)
-    data_final = Column(Date)
+    nome = Column(String(100), index=True)
+    descricao = Column(String(255))
+    data_inicio = Column(DateTime, default=datetime.datetime.utcnow)
+    data_final = Column(DateTime, default=datetime.datetime.utcnow)
+    observacoes = Column(String(255), nullable=True) # Este campo pode ser nulo
+
